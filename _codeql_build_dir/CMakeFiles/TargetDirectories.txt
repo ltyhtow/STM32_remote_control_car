@@ -1,6 +1,0 @@
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/CMakeFiles/a26030101.dir
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/CMakeFiles/edit_cache.dir
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/CMakeFiles/rebuild_cache.dir
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
-/home/runner/work/a26030101/a26030101/_codeql_build_dir/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
