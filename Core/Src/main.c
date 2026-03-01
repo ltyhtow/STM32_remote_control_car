@@ -52,7 +52,7 @@ char RxDate[50] = {0};
 int temp1 = 0;
 int temp2 = 0;
 uint8_t RxDate_0[2] = {0};
-volatile uint8_t rx_cmd = '0';
+volatile uint8_t rx_cmd = '0'; // 保存串口接收到的电机控制命令，用volatile修饰确保中断与主循环之间数据同步
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +88,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (huart -> Instance == USART1)
   {
-    rx_cmd = RxDate_0[0];
+    rx_cmd = RxDate_0[0];                         // 仅保存命令，不在中断中操作GPIO，避免被主循环覆盖
     HAL_UART_Receive_IT(&huart1, RxDate_0, 1);   // 重新开启串口中断接收
   }
 }
@@ -155,6 +155,7 @@ int main(void)
     }else
     {
       HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_SET);
+      // 根据串口接收到的命令控制电机方向（在主循环中统一处理，避免中断与主循环竞争GPIO）
       if (rx_cmd == '0')
       {
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
