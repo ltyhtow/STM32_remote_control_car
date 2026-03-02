@@ -173,24 +173,32 @@ int main(void)
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
       }else if (rx_cmd == 1)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
       }else if (rx_cmd == 2)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
       }else if (rx_cmd == 3)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
       }else if (rx_cmd == 4)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
@@ -198,12 +206,14 @@ int main(void)
       }else if (rx_cmd == 5)
       {
         __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 50);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
       }else if (rx_cmd == 6)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
         __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 50);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
