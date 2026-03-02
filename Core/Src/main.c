@@ -65,6 +65,7 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 void hcsr04_start(void)
 {
+  __HAL_TIM_SET_COUNTER(&htim1, 0);
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
   __HAL_TIM_SET_COUNTER(&htim2, 0);
   while (__HAL_TIM_GET_COUNTER(&htim2) < 10){};
@@ -215,10 +216,10 @@ int main(void)
       {
         __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
         __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 50);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
       }
     }
     // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
