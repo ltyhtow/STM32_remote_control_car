@@ -52,7 +52,7 @@ char RxDate[50] = {0};
 int temp1 = 0;
 int temp2 = 0;
 uint8_t RxDate_0[2] = {0};
-volatile uint8_t rx_cmd = '0'; // 保存串口接收到的电机控制命令，用volatile修饰确保中断与主循环之间数据同步
+volatile uint8_t rx_cmd = '9'; // 保存串口接收到的电机控制命令，用volatile修饰确保中断与主循环之间数据同步
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -134,8 +134,8 @@ int main(void)
   HAL_TIM_IC_Start(&htim1, TIM_CHANNEL_1);//这个是给超声波用的
   HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_2);//这个是给超声波用的
   HAL_TIM_Base_Start(&htim2);//这个是给超声波延时用的
-  __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 70);
-  __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 70);
+  __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+  __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
   HAL_UART_Receive_IT(&huart1, RxDate_0, 1);   // 开启串口中断接收
   /* USER CODE END 2 */
 
@@ -152,46 +152,63 @@ int main(void)
       HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
       HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
       HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_RESET);
-    }else
-    {
-      HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_SET);
-      // 根据串口接收到的命令控制电机方向（在主循环中统一处理，避免中断与主循环竞争GPIO）
-      if (rx_cmd == '0')
-      {
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-      }else if (rx_cmd == '1')
-      {
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-      }else if (rx_cmd == '2')
+      if (rx_cmd == 2)
       {
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-      }else if (rx_cmd == '3')
+      }
+    }else
+    {
+      HAL_GPIO_WritePin(GPIOA,GPIO_PIN_7,GPIO_PIN_SET);
+      // 根据串口接收到的命令控制电机方向（在主循环中统一处理，避免中断与主循环竞争GPIO）
+      if (rx_cmd == 0)
+      {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 99);
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 99);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+      }else if (rx_cmd == 1)
+      {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+      }else if (rx_cmd == 2)
+      {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+      }else if (rx_cmd == 3)
       {
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-      }else if (rx_cmd == '4')
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+      }else if (rx_cmd == 4)
       {
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-      }else if (rx_cmd == '5')
+      }else if (rx_cmd == 5)
       {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, 50);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_RESET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET);
         HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+      }else if (rx_cmd == 6)
+      {
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, 50);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_2, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
       }
     }
     // HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
